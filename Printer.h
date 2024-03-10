@@ -8,8 +8,7 @@ using namespace std;
 */
 class Printer {
 public:
-  static void printResults(double pay) {
-    cout << "El pago del empleado es de: "
-         << " $" << pay;
-  }
+    static void printResults(double pay) {
+        cout << "El pago del empleado es de: " << " $" << pay;
+    }
 };
