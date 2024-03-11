@@ -15,9 +15,16 @@ public:
 
     Salida(){
         nombre = "";
-        categoria = "";
         numeroNomina = 0 ;
+        categoria = "";
         sueldo = 0.0;
+    }
+
+    Salida(string nom, int numNomina, string cat, float suel){
+        nombre = nom;
+        numeroNomina = numNomina;
+        categoria = cat;
+        sueldo = suel;
     }
 };
 

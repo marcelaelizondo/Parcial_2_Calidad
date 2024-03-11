@@ -22,7 +22,7 @@ bool existeArch(string arch){
 }
 
 //Comprobar si el archivo no esta vacio
-bool vacio(ifstream arch){
+bool vacio(ifstream& arch){
     bool vacio = false;
     if(arch.peek()==ifstream::traits_type::eof()){
         vacio=true;
@@ -92,13 +92,14 @@ bool esEntero(string num){
 //Recibe un string (Los datos)
 //Recibe un contador (Identificador de linea)
 //Le hace referencia a un vector llamado datos
-bool datosValidos(string linea, int contador, vector<string> &Datos){
-    //string linea;
+pair<vector<string>, vector<float>> datosValidos(string linea, int contador) {
     stringstream ss(linea);
     string categoria, nombre, nomina;
     getline(ss, categoria, ' ');
     getline(ss, nombre, ' ');
     getline(ss, nomina, ' ');
+    vector<string> Datos;
+    vector<float> preciosUni;
     if(categoriaExiste(categoria) && nombreCorrecto(nombre) && nominaCorrecta(nomina)){//Primera validacion de datos: Tipo de contrato, nombre del empleado y numero de nomina
         switch(categoria[0]){
             //Empleado Categoria 1
@@ -113,10 +114,8 @@ bool datosValidos(string linea, int contador, vector<string> &Datos){
                     Datos.push_back(nomina);
                     Datos.push_back(tarifa);
                     Datos.push_back(horas);
-                    return true;
                 }else{
                     cout<<"Existe un error en la linea "<<contador<<". Favor de corregir."<<endl;
-                    return false;
                 }
                 break;
             }
@@ -136,19 +135,17 @@ bool datosValidos(string linea, int contador, vector<string> &Datos){
                     Datos.push_back(sueldoBase);
                     Datos.push_back(prestaciones);
                     Datos.push_back(deducciones);
-                    return true;
                 }else{
                     cout<<"Existe un error en la linea "<<contador<<". Favor de corregir."<<endl;
-                    return false;
                 }
                 break;
             }
                 //Empleado Categoria 3
-            case '3':{
+            case '3': {
                 string porcentaje, numVentas;
                 getline(ss, porcentaje, ' ');
-                getline(ss, numVentas, ' ');
-                if(esDecimal(porcentaje) && esEntero(numVentas)){
+                getline(ss, numVentas, ' '); // Adjusted for consistency, might need to remove the delimiter based on your input format
+                if(esDecimal(porcentaje) && esEntero(numVentas)) {
                     Datos.push_back(categoria);
                     Datos.push_back(nombre);
                     Datos.push_back(nomina);
@@ -156,31 +153,35 @@ bool datosValidos(string linea, int contador, vector<string> &Datos){
                     Datos.push_back(numVentas);
                     int numV = stoi(numVentas);
                     string precioUni;
-                    vector<float> preciosUni; //Vector para el precio de cada venta
                     bool precioValido = true;
-                    //Validacion de cada precio.
-                    for(int i = 0; i < numV && precioValido; i++){
-                        getline(ss, precioUni, ' ');
+                    for(int i = 0; i < numV && precioValido; i++) {
+                        getline(ss, precioUni, i < numV - 1 ? ' ' : '\n'); // Adjust for the last item or different delimiter
                         precioValido = esDecimal(precioUni);
-                        if(precioValido){
-                            Datos.push_back(precioUni);
-                        }else{
-                            precioValido=false;
+                        if(precioValido) {
+                            preciosUni.push_back(stof(precioUni)); // Convert to float and store
+                        } else {
+                            cout << "Existe un error en la linea " << contador << " en el precio unitario. Favor de corregir." << endl;
+                            break; // Exit the loop on validation failure
                         }
                     }
-                    if(precioValido){
-                        //Empieza el proceso de calculo de sueldo
-                        return true;
+                    // If preciosUni has fewer items than expected, consider it a validation failure
+                    if(preciosUni.size() != static_cast<size_t>(numV)) {
+                        cout << "Existe un error en la cantidad de precios unitarios en la linea " << contador << ". Favor de corregir." << endl;
+                        preciosUni.clear(); // Clear preciosUni to indicate an error
                     }
-                }else{
-                    cout<<"Existe un error en la linea "<<contador<<". Favor de corregir."<<endl;
-                    return false;
+                } else {
+                    cout << "Existe un error en la linea " << contador << ". Favor de corregir." << endl;
                 }
                 break;
             }
+            default: {
+                cout << "Categoria no reconocida en la linea " << contador << endl;
+                break;
+            }
         }
-    }else{
-        cout<<"Existe un error en la linea "<<contador<<". Favor de corregir."<<endl;
-        return false;
+    } else {
+        cout << "Existe un error en la linea " << contador << ". Favor de corregir." << endl;
     }
+
+    return make_pair(Datos, preciosUni);
 }

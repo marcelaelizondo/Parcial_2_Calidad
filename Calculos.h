@@ -7,21 +7,21 @@ using namespace std;
 class Calculos
 {
 public:
-    static double Metodo1(double tarifa, int horas)
+    static float Metodo1(float tarifa, int horas)
     {
-        double sueldo = tarifa * horas;
+        float sueldo = tarifa * horas;
         return sueldo;
     }
-    static double Metodo2(double base, double prestaciones, double deducciones)
+    static float Metodo2(float base, float prestaciones, float deducciones)
     {
-        double sueldo = base - deducciones + prestaciones;
+        float sueldo = base - deducciones + prestaciones;
         return sueldo;
     }
 
-    static double Metodo3(double porcentajeComision, vector<double> &precioCarros)
+    static float Metodo3(float porcentajeComision, vector<float> &precioCarros)
     {
-        double suma;
-        double sueldo;
+        float suma;
+        float sueldo;
         porcentajeComision = porcentajeComision / 100;
         for (int i = 0; i < precioCarros.size(); i++)
         {
