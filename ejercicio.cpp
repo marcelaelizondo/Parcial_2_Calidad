@@ -38,14 +38,11 @@ int main(int argc, char const *argv[])
                         }
                         vector<float> preciosUni = result.second;
                         float sueldo;
-                        string categoria = Datos[0];
-                        string nombre = Datos[1];
-                        string nomina = Datos[2];
                         switch(categoria[0]){
                             case '1':{
-                                string tarifas = Datos[3];
-                                string horas = Datos[4];
-                                sueldo = Calculos::Metodo1(stof(tarifas), stoi(horas));
+                                float tarifas = stof(Datos[3]);
+                                int horas = stoi(Datos[4]);
+                                sueldo = Calculos::Metodo1(tarifas, horas);
                             } break;
 
                             case '2':{
@@ -61,6 +58,9 @@ int main(int argc, char const *argv[])
                             } break;
 
                         }
+                        string categoria = Datos[0];
+                        string nombre = Datos[1];
+                        string nomina = Datos[2];
                         Salida empleado(nombre, nomina,categoria,sueldo);
                         imprimirSalida(empleado);
                     }
