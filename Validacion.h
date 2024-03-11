@@ -92,7 +92,7 @@ bool esEntero(string num){
 //Recibe un string (Los datos)
 //Recibe un contador (Identificador de linea)
 //Le hace referencia a un vector llamado datos
-pair<vector<string>, vector<float>> datosValidos(string linea, int contador) {
+pair<vector<string>, vector<float> > datosValidos(string linea, int contador) {
     stringstream ss(linea);
     string categoria, nombre, nomina;
     getline(ss, categoria, ' ');
