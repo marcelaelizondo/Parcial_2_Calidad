@@ -144,8 +144,8 @@ pair<vector<string>, vector<float>> datosValidos(string linea, int contador) {
             case '3': {
                 string porcentaje, numVentas;
                 getline(ss, porcentaje, ' ');
-                getline(ss, numVentas, ' '); // Adjusted for consistency, might need to remove the delimiter based on your input format
-                if(esDecimal(porcentaje) && esEntero(numVentas)) {
+                getline(ss, numVentas, ' ');
+                if(esDecimal(porcentaje) && esEntero(numVentas)){
                     Datos.push_back(categoria);
                     Datos.push_back(nombre);
                     Datos.push_back(nomina);
@@ -155,27 +155,20 @@ pair<vector<string>, vector<float>> datosValidos(string linea, int contador) {
                     string precioUni;
                     bool precioValido = true;
                     for(int i = 0; i < numV && precioValido; i++) {
-                        getline(ss, precioUni, i < numV - 1 ? ' ' : '\n'); // Adjust for the last item or different delimiter
+                        getline(ss, precioUni, ' ');
                         precioValido = esDecimal(precioUni);
                         if(precioValido) {
-                            preciosUni.push_back(stof(precioUni)); // Convert to float and store
+                            preciosUni.push_back(stof(precioUni));
                         } else {
                             cout << "Existe un error en la linea " << contador << " en el precio unitario. Favor de corregir." << endl;
-                            break; // Exit the loop on validation failure
                         }
                     }
-                    // If preciosUni has fewer items than expected, consider it a validation failure
                     if(preciosUni.size() != static_cast<size_t>(numV)) {
                         cout << "Existe un error en la cantidad de precios unitarios en la linea " << contador << ". Favor de corregir." << endl;
-                        preciosUni.clear(); // Clear preciosUni to indicate an error
                     }
                 } else {
                     cout << "Existe un error en la linea " << contador << ". Favor de corregir." << endl;
                 }
-                break;
-            }
-            default: {
-                cout << "Categoria no reconocida en la linea " << contador << endl;
                 break;
             }
         }

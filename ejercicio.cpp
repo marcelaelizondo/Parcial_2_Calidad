@@ -33,6 +33,9 @@ int main(int argc, char const *argv[])
                         contador++;
                         auto result = datosValidos(linea, contador);
                         vector<string> Datos = result.first;
+                        if (Datos.empty()){
+                            break;
+                        }
                         vector<float> preciosUni = result.second;
                         float sueldo;
                         string categoria = Datos[0];
@@ -53,12 +56,12 @@ int main(int argc, char const *argv[])
                             }break;
 
                             case '3':{
-                                float porcentaje = stof(Datos[4]);
+                                float porcentaje = stof(Datos[3]);
                                 sueldo = Calculos::Metodo3(porcentaje, preciosUni);
-                            }break;
+                            } break;
 
                         }
-                        Salida empleado(nombre, stoi(nomina),categoria,sueldo);
+                        Salida empleado(nombre, nomina,categoria,sueldo);
                         imprimirSalida(empleado);
                     }
                 }else cout<<"El archivo se encuentra vacio"<<endl;
@@ -66,7 +69,7 @@ int main(int argc, char const *argv[])
                 cout << "El archivo no existe o tiene un error de ortografia." << endl;
                 cout << "Por favor, intente de nuevo." << endl << endl;
             }
-        }//si es 0 se apaga
+        }
     }
     return 0;
 }

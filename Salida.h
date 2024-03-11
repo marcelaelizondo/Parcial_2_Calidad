@@ -8,19 +8,19 @@ using namespace std;
 class Salida{
 public:
     string nombre;
-    int numeroNomina;
+    string numeroNomina;
     string categoria;
     float sueldo;
 
 
     Salida(){
         nombre = "";
-        numeroNomina = 0 ;
+        numeroNomina = "" ;
         categoria = "";
         sueldo = 0.0;
     }
 
-    Salida(string nom, int numNomina, string cat, float suel){
+    Salida(string nom, string numNomina, string cat, float suel){
         nombre = nom;
         numeroNomina = numNomina;
         categoria = cat;
@@ -37,21 +37,11 @@ void imprimirSueldo(Salida empleado) {
 }
 
 void imprimirNumeroNomina(Salida empleado){
-    cout << "Nómina: ";
-    if(empleado.numeroNomina > 0){
-        cout << "#" << empleado.numeroNomina << " | ";
-    }else{
-        cout << "Numero no válido | ";
-    }
+    cout << empleado.numeroNomina << " | ";
 }
 
 void imprimirCategoria(Salida empleado){
-    cout << "Tipo de Categoría: ";
-    if(empleado.categoria != "1" && empleado.categoria != "2" && empleado.categoria != "3"){
-        cout << "No válida | ";
-    }else{
-        cout << empleado.categoria << " | ";
-    }
+    cout << "Tipo de Categoria: "<< empleado.categoria << " | ";
 }
 
 void imprimirSalida(Salida empleado) {
