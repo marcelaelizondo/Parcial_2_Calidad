@@ -20,7 +20,7 @@ public:
 
     static float Metodo3(float porcentajeComision, vector<float> &precioCarros)
     {
-        float suma;
+        float suma=0;
         float sueldo;
         porcentajeComision = porcentajeComision / 100;
         for (int i = 0; i < precioCarros.size(); i++)
